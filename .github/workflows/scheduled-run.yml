@@ -5,12 +5,17 @@ on:
     - cron: '30 20,1,8,13 * * *'
   workflow_dispatch:       
 
+permissions:
+  contents: write
+
 jobs:
   run-analysis:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -27,3 +32,16 @@ jobs:
           QUANTGIST_API_KEYS: ${{ secrets.QUANTGIST_API_KEYS }}
           GROQ_API_KEYS: ${{ secrets.GROQ_API_KEYS }}
         run: python run_scheduled.py
+      
+      - name: Commit run log
+        run: |
+          git config --local user.email "146152744+mkhafidm@users.noreply.github.com"
+          git config --local user.name "mkhafidm"
+          echo "Run at $(date '+%Y-%m-%d %H:%M:%S WIB')" >> run_log.txt
+          git add run_log.txt
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: update run_log.txt [$(date '+%Y-%m-%d %H:%M')]"
+            git push
+          fi
