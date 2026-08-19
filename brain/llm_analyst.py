@@ -536,7 +536,8 @@ def generate_analysis(data: dict) -> str:
                 ],
                 model=GROQ_MODEL,
                 temperature=0.3,
-                max_tokens=2048,
+                max_tokens=4096,
+                reasoning_effort="default", # New LLM Model parameter
             )
             return completion.choices[0].message.content
         except RuntimeError as e:

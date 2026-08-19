@@ -102,7 +102,8 @@ NEWS_TOP_N_LIMIT_EACH = 15
 # ============================================================
 # LLM / GROQ
 # ============================================================
-GROQ_MODEL = "llama-3.3-70b-versatile"
+# GROQ_MODEL = "llama-3.3-70b-versatile"
+GROQ_MODEL = "qwen/qwen3.6-27b"
 GROQ_TEMPERATURE = 0.3
 GROQ_MAX_TOKENS = 2048
 GROQ_SYSTEM_PROMPT = "Anda adalah analis finansial senior. Jawab dalam bahasa Indonesia profesional. Jangan mengarang data."
